@@ -1,4 +1,6 @@
 import numpy as np
+import skimage
+
 def Homography_estimate(x1, y1, x2, y2):
     n1 = len(x1)
     if n1 < 4:
@@ -31,3 +33,36 @@ def Homography_estimate(x1, y1, x2, y2):
     H = H_flat.reshape((3, 3))
     
     return H
+
+def homography_apply(H, x1, y1):
+    x1=np.array(x1)
+    y1=np.array(y1)
+    numx = 0
+    numy = 0
+    deno = 0
+    
+    # numx = h11*x + h12*y + h13
+    numx = H[0,0]*x1 + H[0,1]*y1 + H[0,2]
+    
+    # numy = h21*x + h22*y + h23
+    numy = H[1,0]*x1 + H[1,1]*y1 + H[1,2]
+    
+    # deno = h31*x + h32*y + h33
+    deno = H[2,0]*x1 + H[2,1]*y1 + H[2,2]
+    
+    x2 = numx/deno
+    x1 = numy/deno           
+    return (x2,y2)
+    
+
+#(Source: Carré, Destination: Carré décalé de 5,5)
+x1, x2, y1, y2 = [0, 10, 10, 0], [5, 15, 15, 5], [0, 0, 10, 10], [5, 5, 15, 15]
+
+H = Homography_estimate(x1, y1, x2, y2)
+
+x2_calc, y2_calc = homography_apply(H, x1, y1)
+
+print("x2 calculés:", x2_calc)
+print("x2 théoriques:", x2)
+print("y2 calculés:",y2_calc)
+print("y2 théorique:",y2)
