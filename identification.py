@@ -66,3 +66,19 @@ print("x2 calculés:", x2_calc)
 print("x2 théoriques:", x2)
 print("y2 calculés:",y2_calc)
 print("y2 théorique:",y2)
+
+#Pour projection : on a un contenu de 
+#remplacement I1 qu'on renvoie dans le quadrangle, 
+#l'image crée ou modifié est l'image qui doit être parcourue I2. 
+#on applique l'homographie qui va de I2 dans les 4 coins de l'image I1
+#on balaye I2 et on remarque les points non-concernés on a besoin d'un test pour savoir
+#si on se trouve dans le quadrangle : dès qu'on connait l'homographie,
+#on applique l'homographie à ce point et on observe si on se trouve dans le rectangle
+#si c'est bon : on applique, sinon : on abandonne le processus
+def homography_projection(I1, I2, x, y)
+    x=np.array(x)
+    y=np.array(y)
+
+
+
+
